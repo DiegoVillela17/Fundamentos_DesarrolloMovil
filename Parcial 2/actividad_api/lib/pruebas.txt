@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'services/espn_service.dart';
+import 'dart:convert';
+import 'screens/partidos_screen.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  String mensaje = 'Consultando ESPN...';
+
+  try {
+    
+    
+    final datos = await obtenerDatosEspn();
+    final contenido = await obtenerDatosEspn();
+    final partidos = contenido['events'];
+    mensaje = 'Se encontraron ${partidos.length} partidos.';
+    if(partidos.isNotEmpty){
+      final primerPartido = partidos[0];
+      mensaje += '\n${primerPartido['name']}';
+
+      debugPrint('Nombre: ${primerPartido['name']}');
+      debugPrint('Abreviatura: ${primerPartido['shortName']}');
+      debugPrint('Fecha: ${primerPartido['date']}');
+      debugPrint('Temporada: ${primerPartido['season']['year']}');
+      debugPrint('Semana: ${primerPartido['week']['number']}');
+      debugPrint('Estado: ${primerPartido['status']['type']['description']}');
+      debugPrint('Detalle: ${primerPartido['status']['type']['detail']}');
+
+      if (partidos.isNotEmpty) {
+        final partido = partidos[0];
+        final competencia = partido['competitions'][0];
+        final equipos = competencia['competitors'];
+
+        for (int i = 0; i < equipos.length; i++) {
+        final equipo = equipos[i];
+        mensaje += '\n${equipo['team']['displayName']}: ${equipo['score']} puntos';
+        debugPrint('Equipo: ${equipo['team']['displayName']}');
+        debugPrint('Puntos: ${equipo['score']}');
+        debugPrint('Local o visitante: ${equipo['homeAway']}');
+        }
+}
+      /*for (int i = 0; i < partidos.length; i++){
+        final partido = partidos[i];
+        debugPrint('Nombre: ${partido['name']}');
+        debugPrint('Estado: ${partido['status']['type']['description']}');
+
+      }*/
+    
+    }
+
+   
+
+    //debugPrint(datos);
+    //debugPrint(partidos.toString());
+  } catch (error) {
+    mensaje = 'No se pudo consultar ESPN.';
+    debugPrint(error.toString());
+  }
+
+  runApp(
+  MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: PartidosScreen(mensaje: mensaje),
+  ),
+);
+}
+
+
+
+
