@@ -55,8 +55,6 @@ class _RegistroScreenState extends State<RegistroScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(mensaje)));
 
-      // Esta pantalla se abrirá desde Login con Navigator.push.
-      // Al regresar, la pantalla principal resolverá la sesión de Supabase.
       setState(() => _cargando = false);
       Navigator.of(context).pop();
     } on AuthException catch (error) {

@@ -12,6 +12,9 @@ dependencies:
   flutter_map: ^8.3.2
   latlong2: ^0.10.1
   url_launcher: ^6.3.2
+  showcaseview: ^5.1.0
+  custom_rating_bar: ^3.0.0
+  adaptive_theme: 3.7.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

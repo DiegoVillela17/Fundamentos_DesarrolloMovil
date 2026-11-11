@@ -65,8 +65,6 @@ class _LugarCardState extends State<LugarCard> {
         ),
       );
 
-      // Consultamos también si se volvió sin confirmar el guardado.
-      // El servidor pudo completar una operación cuya respuesta se perdió.
       if (mounted) {
         await actualizar();
       }
